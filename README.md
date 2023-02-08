@@ -2,6 +2,7 @@
 
 
 This is my solution of SIER
+![Flask.py](Docs/flask.JPG)
 
 
 # 0 -> Install dependencies:
@@ -17,17 +18,7 @@ Run the main file (main.py) and consume via POSTMAN.
 
 This is in SQLite3 (For easy implemetation) and consume through file (Database.py)
 
-______________________________
-Event                         |
-______________________________
-ID primary key Autoincrement  |
-name_event string             |
-type_event string             |
-description string            |
-date text                     |
-status_event string           |
-visible integer (0|1)         |
-______________________________|
+Event(ID,name_event,type_event,)
 
 ID >> Is a integer to identify a Event.
 name_event >> Is a text to put a name of event
