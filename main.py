@@ -7,7 +7,14 @@ Server SIER
 from flask import Flask, Response, request, render_template
 import logging
 from Database import *
+from EventController import *
 
+# Declares Database and init
+database = Database()
+
+# Declarates a Controller
+
+controller = EventController()
 
 # Configurates a Logger
 logging.basicConfig(filename="logs.log", format="%(levelname)s:%(name)s:%(message)s")
@@ -21,6 +28,10 @@ def not_found(error):
         "error" : error
     }
 
+    userIp = request.remote_addr
+    _url = request.base_url
+    app.logger.info(f"The user: {userIp} try to find resource: {_url}")
+
     return render_template('404.html', **context)
 
 @app.errorhandler(405)
@@ -29,30 +40,40 @@ def not_found(error):
         "error" : error
     }
 
+    userIp = request.remote_addr
+    _url = request.base_url
+    app.logger.info(f"The user: {userIp} try to access: {_url}")
+
     return render_template('405.html', **context)
 
 @app.route('/health')
 def health():
-    app.logger.info("GET the server status.")
+    userIp = request.remote_addr
+    app.logger.info(f"The user: {userIp} ping APP")
     return "Server is OK"
 
 @app.route('/event', methods=['GET', 'POST', 'PATCH', 'DELETE'])
 def event():
+    userIp = request.remote_addr
+
     if request.method == 'GET':
         return ("Estoy GET")
 
     if request.method == 'POST':
-        return ("Estoy POST")
+        json = request.get_json()
+        insert_status = controller.insertEvent(json)
+        if insert_status["status"]:
+            app.logger.info(f"The user: {userIp} insert envent in database")
+        else:
+            app.logger.info(f"The user: {userIp} fail to insert envent in database")
+        
+        return insert_status
 
     if request.method == 'PATCH':
         return ("Estoy PACTH")
 
     if request.method == 'DELETE':
         return ("Estoy DELETE")
-
-    return "Epaaaaaa"
-    
-    
 
 
 #Start
