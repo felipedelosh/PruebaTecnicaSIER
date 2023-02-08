@@ -16,13 +16,14 @@ Run the main file (main.py) and consume via POSTMAN.
 
 This is in SQLite3 (For easy implemetation) and consume through file (Database.py)
 
-Event(ID,name_event,type_event,description,date,status_event,visible)
+Event(ID,name_event,type_event,description,date_create,date_modify,status_event,visible)
 
 - ID >> Is a integer to identify a Event.
 - name_event >> Is a text to put a name of event
 - type_event >> Is a text to diferenciates a type of event PUT GET DELETE PACTH ...
 - description >> Is a text to comment a event
-- date >> Is a timedate of server 
+- date_create >> Is a timedate of server when the event is create
+- date_modify >> Is a timedate of server when the event is modify.
 - status_event >> only two types PendingRevision | Revisated 
 - visible >> Integer 1 or 0  to indicates if event is delete or not delete
 

@@ -19,7 +19,8 @@ class Database:
             name_event text,
             type_event text,
             description text,
-            date text,
+            date_create text,
+            date_modify text,
             status_event text,
             visible integer
         )
