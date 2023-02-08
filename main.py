@@ -57,12 +57,15 @@ def event():
     userIp = request.remote_addr
 
     if request.method == 'GET':
-        return ("Estoy GET")
+        app.logger.info(f"The user: {userIp} get event information")
+        params = request.args
+        information = controller.getEvents(params)
+        return information
 
     if request.method == 'POST':
         json = request.get_json()
         insert_status = controller.insertEvent(json)
-        if insert_status["status"]:
+        if insert_status["status"] == 200:
             app.logger.info(f"The user: {userIp} insert envent in database")
         else:
             app.logger.info(f"The user: {userIp} fail to insert envent in database")

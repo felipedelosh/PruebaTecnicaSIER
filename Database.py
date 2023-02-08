@@ -34,11 +34,57 @@ class Database:
 
     def countAllEvents(self):
         """
-        Return int with all quantity of events
+        Return int with all quantity of events in dic
+        {status: bool, message: str, data: obj}
         """
         sql = """
         select count(*) from event
         """
+        information = {}
+
+        try:
+            self.conection = sqlite3.connect("database.db")
+            cursor = self.conection.execute(sql)
+            information = {"status":True, "message":"Count of all Events" ,"data" : str(cursor.fetchone()[0])}
+            cursor.close()
+        except:
+            information = {"status":False, "message":"Error to Search Event information", "data": []}
+
+        self.conection.close()
+        return information
+
+    def getMinimalInformationOfAllEvents(self):
+        """
+        Return Only the information for the users view
+        """
+        sql = """
+        select id,name_event,type_event,description,date_create,status_event from event where visible = 1
+        """
+        information = {}
+        data = []
+
+        try:
+            self.conection = sqlite3.connect("database.db")
+            cursor = self.conection.execute(sql)
+
+            for i in cursor:
+                event = {}
+                event["id"] = i[0]
+                event["name"] = i[1]
+                event["type"] = i[2]
+                event["description"] = i[3]
+                event["date"] = i[4]
+                event["status"] = i[5]
+                data.append(event)
+
+            information = {"status":True, "message":"All information of events", "data": data}
+            cursor.close()
+        except:
+            information = {"status":False, "message":"Error to Serach Event information", "data": []}
+
+
+        return information
+
 
     def insertEvent(self, event_params):
         """

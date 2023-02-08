@@ -20,7 +20,7 @@ class EventController:
             insert_status = self.dbConector.insertEvent(event_model_params)
 
             if insert_status["status"]:
-                return {"status": 202, "mesagge": insert_status["message"]}
+                return {"status": 200, "mesagge": insert_status["message"]}
             else:
                 return {"status": 402, "mesagge": insert_status["message"]}
 
@@ -28,6 +28,34 @@ class EventController:
             return {"status": 401, "mesagge": params_status["mesagge"]}
 
 
+    def getEvents(self, filters):
+        """
+        return information about event with the filers
+        """
+        information = {}
+
+        filter_id ="id" in filters
+
+        if filter_id:
+
+            if filters["id"] == "all":
+                all_events = self.dbConector.getMinimalInformationOfAllEvents()
+                if all_events["status"]:
+                    information =  {"status":200, "message": all_events["message"], "data": all_events["data"]}
+                else:
+                    information =  {"status":401, "message": all_events["message"], "data": all_events["data"]}
+            
+            elif filters["id"] == "count":
+                event_count = self.dbConector.countAllEvents()
+                if event_count["status"]:
+                    information = {"status":200, "message": event_count["message"], "data": event_count["data"]}
+                else:
+                    information = {"status":401, "message": event_count["message"], "data": event_count["data"]}
+
+            else:
+                pass
+
+        return information
         
 
     def validatesEventInputParams(self, eventParams):
