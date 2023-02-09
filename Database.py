@@ -80,7 +80,42 @@ class Database:
             information = {"status":True, "message":"All information of events > total: "+str(len(data)), "data": data}
             cursor.close()
         except:
-            information = {"status":False, "message":"Error to Serach Event information", "data": []}
+            information = {"status":False, "message":"Error to Search Event information", "data": []}
+
+        self.conection.close()
+        return information
+
+
+    def getHideEvents(self):
+        """
+        Return all events eliminates
+        """
+        sql = """
+        select * from event where visible = 0
+        """
+        information = {}
+        data = []
+
+        try:
+            self.conection = sqlite3.connect("database.db")
+            cursor = self.conection.execute(sql)
+
+            for i in cursor:
+                event = {}
+                event["id"] = i[0]
+                event["name"] = i[1]
+                event["type"] = i[2]
+                event["description"] = i[3]
+                event["date"] = i[4]
+                event["date_mod"] = i[5]
+                event["status"] = i[6]
+                event["visible"] = i[7]
+                data.append(event)
+
+            information = {"status":True, "message":"All information of events > total: "+str(len(data)), "data": data}
+            cursor.close()
+        except:
+            information = {"status":False, "message":"Error to Search Event information", "data": []}
 
         self.conection.close()
         return information

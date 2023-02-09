@@ -100,6 +100,10 @@ is the input value to filter a information for examples:
 
 ![Get Single Event](Docs/getSingleEvent.png)
 
+- id = delete : return all delete events
+
+![Get delete events](Docs/getDeleteEvents.png)
+
 
 ## Edit Event
 

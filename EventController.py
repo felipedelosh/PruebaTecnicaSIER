@@ -51,7 +51,12 @@ class EventController:
                     information = {"status":200, "message": event_count["message"], "data": event_count["data"]}
                 else:
                     information = {"status":401, "message": event_count["message"], "data": event_count["data"]}
-
+            elif filters["id"] == "delete" or filters["id"] == "hide":
+                delete_events = self.dbConector.getHideEvents()
+                if delete_events["status"]:
+                    information = {"status":200, "message": delete_events["message"], "data": delete_events["data"]}
+                else:
+                    information = {"status":401, "message": delete_events["message"], "data": delete_events["data"]}
             else:
                 # Get indidual resouce?
                 try:
