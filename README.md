@@ -78,7 +78,7 @@ and return a Json file
 {
  data: vector with rich information,
  status: code of return,
- message: string with,
+ message: string with the status of request,
 }
 
 

@@ -15,6 +15,9 @@ database = Database()
 # Declarates a Controller
 controller = EventController()
 
+# Generate a Static events
+controller.generateStaticEvents()
+
 # Configurates a Logger
 logging.basicConfig(filename="logs.log", format="%(levelname)s:%(name)s:%(message)s")
 
