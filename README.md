@@ -48,7 +48,7 @@ Route to ADD, EDIT, DELETE and VIEW the events, you need specifed a verb:
 
 - GET: obtain a events.
 - POST: save a event.
-- PACTH: edit a event.
+- PATCH: edit a event.
 - DELETE: Hide a event.
 
 

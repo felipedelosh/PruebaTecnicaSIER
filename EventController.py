@@ -107,6 +107,10 @@ class EventController:
         if "status_event" not in eventParams:
             message = message + "Not found 'status_event', "
             errors_counter = errors_counter + 1
+        else:
+            if eventParams["status_event"] != "PendingRevision":
+                message = message + "Error in 'status_event' always 'PendingRevision' for new events, "
+                errors_counter = errors_counter + 1
 
         if errors_counter == 0:
             return {"status": True}
