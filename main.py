@@ -76,7 +76,14 @@ def event():
         return ("Estoy PACTH")
 
     if request.method == 'DELETE':
-        return ("Estoy DELETE")
+        id_in_json = request.get_json()
+        delete_event_information = controller.deleteEvent(id_in_json)
+        if  delete_event_information["status"] == 200:
+            app.logger.info(f"The user: {userIp} delete envent in database")
+        else:
+            app.logger.info(f"The user: {userIp} try to delete a envent in database")
+
+        return delete_event_information
 
 
 #Start

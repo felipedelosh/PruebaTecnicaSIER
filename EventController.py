@@ -118,3 +118,27 @@ class EventController:
             message = message + " Total errors: "+str(errors_counter)
             return {"status": False, "mesagge": message}
 
+
+    def deleteEvent(self, id_in_json):
+        """
+        This not erase of database only hide
+        return {status:bool, message:str}
+        """
+        information = {}
+
+        hav_id = "id" in id_in_json
+
+        if hav_id:
+            try:
+                id = int(id_in_json["id"])
+                event_delete_information = self.dbConector.deleteEvent(id)
+                if event_delete_information["status"]:
+                    information = {"status": 200, "mesagge":event_delete_information["message"]}
+                else:
+                    information = {"status": 401, "mesagge":event_delete_information["message"]}
+            except:
+                information = {"status": 401, "mesagge": "Invalid to proccessed 'id'"}
+        else:
+            information = {"status": 401, "mesagge": "to delete a event you need a 'id'"}
+
+        return information

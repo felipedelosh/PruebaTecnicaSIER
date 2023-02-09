@@ -122,7 +122,6 @@ class Database:
     def insertEvent(self, event_params):
         """
         Try to insert a event in database
-
         """
         sql = """
         insert into event (id, name_event, type_event, description, date_create, date_last_update, status_event, visible) values (?,?,?,?,?,?,?,?)
@@ -139,3 +138,23 @@ class Database:
     
         self.conection.close()
         return insert_status
+
+    def deleteEvent(self, id):
+        """
+        Hide a event in database
+        """
+        sql = """
+        UPDATE event SET visible = 0 where id = ?
+        """
+        information = {}
+        try:
+            self.conection = sqlite3.connect("database.db")
+            cursor = self.conection.execute(sql, (id, ))
+            self.conection.commit()
+            cursor.close()
+            information = {"status":True, "message":"Delete a Event "+str(id)}
+        except:
+            information = {"status":False, "message":"Not delete a Event with id ="+str(id)}
+
+        self.conection.close()
+        return information

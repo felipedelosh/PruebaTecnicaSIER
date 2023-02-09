@@ -99,6 +99,3 @@ is the input value to filter a information for examples:
 - id = Number : of event return a event with the ID specificated.
 
 ![Get Single Event](Docs/getSingleEvent.png)
-
-
-
