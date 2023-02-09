@@ -13,7 +13,6 @@ from EventController import *
 database = Database()
 
 # Declarates a Controller
-
 controller = EventController()
 
 # Configurates a Logger
@@ -73,7 +72,15 @@ def event():
         return insert_status
 
     if request.method == 'PATCH':
-        return ("Estoy PACTH")
+        json_data = request.get_json()
+        edit_status = controller.editEvent(json_data)
+
+        if edit_status["status"] == 200:
+            app.logger.info(f"The user: {userIp} edit envent in database")
+        else:
+            app.logger.info(f"The user: {userIp} fail to edit a envent in database")
+
+        return edit_status
 
     if request.method == 'DELETE':
         id_in_json = request.get_json()

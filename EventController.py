@@ -14,7 +14,7 @@ class EventController:
         Insert a event
         """
 
-        params_status = self.validatesEventInputParams(event_model_params)
+        params_status = self.validatesEventInputParamsToNewEvent(event_model_params)
         if params_status["status"]:
             # Insert the event and get the status
             insert_status = self.dbConector.insertEvent(event_model_params)
@@ -68,25 +68,19 @@ class EventController:
         return information
         
 
-    def validatesEventInputParams(self, eventParams):
+    def validatesEventInputParamsToNewEvent(self, eventParams):
         """
-        validates if all insert params of event are ok
+        validates if all insert params of new event are ok
         return {status: bool, message: str}
         """
         message = ""
         errors_counter = 0
 
-        if "id" not in eventParams:
-            message = message + "Not found 'id', "
+        id_satus = self._validatesEventID(eventParams)
+        if not id_satus["status"]:
             errors_counter = errors_counter + 1
-        else:
-            try:
-                if int(eventParams["id"]) < 0:
-                    message = message + "Not insert negative 'id', "
-                    errors_counter = errors_counter + 1
-            except:
-                message = message + "Not valid 'id', "
-                errors_counter = errors_counter + 1
+            message = id_satus["message"]
+
 
         if "name_event" not in eventParams:
             message = message + "Not found 'name_event', "
@@ -113,10 +107,58 @@ class EventController:
                 errors_counter = errors_counter + 1
 
         if errors_counter == 0:
-            return {"status": True}
+            return {"status": True, "mesagge": "All OK"}
         else:
             message = message + " Total errors: "+str(errors_counter)
             return {"status": False, "mesagge": message}
+
+    def validatesEventInputParamsToEditEvent(self, args):
+        """
+        Validates if the params in args are ok to edit a event
+        return {status:bool, message: str}
+        """
+        message = ""
+        errors_counter = 0
+
+        id_satus = self._validatesEventID(args)
+        if not id_satus["status"]:
+            errors_counter = errors_counter + 1
+            message = id_satus["message"]
+
+        # Indicates a params to edit?
+        if not ("name_event" in args or "type_event" in args or "description" in args or "date_event" in args or "status_event" in args):
+            errors_counter = errors_counter + 1
+            message = "Not indicates a event input params"
+
+        if errors_counter == 0:
+            return {"status": True, "mesagge": "All OK"}
+        else:
+            return {"status": False, "mesagge": message}
+
+    def _validatesEventID(self, args):
+        """
+        Enter a json with all Event params
+        and return if id is ok
+        return {status: bool, message: str}
+        """
+
+        if "id" not in args:
+            return {"status": False, "message": "Not found 'id', "}
+        else:
+            try:
+                if int(args["id"]) < 0:
+                    return {"status": False, "message": "Not insert negative 'id', "}
+                else:
+                    return {"status": True, "message": ""}
+            except:
+                return {"status": False, "message": "Not valid 'id', "}
+
+    def _validatesIfEventStatusIsOk(self, args):
+        """
+        Enter a json with all Event params with status_event
+        if return if status_event is ok
+        """
+        return args["status_event"] == "PendingRevision" or args["status_event"] == "Revised"
 
 
     def deleteEvent(self, id_in_json):
@@ -142,3 +184,17 @@ class EventController:
             information = {"status": 401, "mesagge": "to delete a event you need a 'id'"}
 
         return information
+
+    def editEvent(self, event_model_params):
+        """
+        Edit the params indicates en json
+        """
+        params_status = self.validatesEventInputParamsToEditEvent(event_model_params)
+
+        if params_status["status"]:
+            return {"status": 200, "message": "All OK" }
+        else:
+            return {"status": 401, "message" : params_status["mesagge"]}
+ 
+
+        
