@@ -125,15 +125,21 @@ class EventController:
             errors_counter = errors_counter + 1
             message = id_satus["message"]
 
+        hav_status_event = "status_event" in args
+        if hav_status_event:
+            if not self._validatesIfEventStatusIsOk(args):
+                errors_counter = errors_counter + 1
+                message =  message + "Invalid State Event in params, "
+
         # Indicates a params to edit?
         if not ("name_event" in args or "type_event" in args or "description" in args or "date_event" in args or "status_event" in args):
             errors_counter = errors_counter + 1
             message = "Not indicates a event input params"
 
         if errors_counter == 0:
-            return {"status": True, "mesagge": "All OK"}
+            return {"status": True, "message": "All OK"}
         else:
-            return {"status": False, "mesagge": message}
+            return {"status": False, "message": message}
 
     def _validatesEventID(self, args):
         """
