@@ -12,7 +12,7 @@ python3 -m pip install flask
 
 Run the main file (main.py) and consume via POSTMAN.
 
-![Server Funtion](Docs\Funtion.png)
+![Server Funtion](Docs/Funtion.png)
 
 
 # 2 -> About Database
@@ -66,7 +66,7 @@ Enter the url localhost:4000/event method POST and send de Json with the informa
     "status_event" : "PendingRevision"
 }
 
-![Insert Event](Docs\insertEvent.png)
+![Insert Event](Docs/insertEvent.png)
 
 
 ## Get events
@@ -90,15 +90,15 @@ is the input value to filter a information for examples:
 
 - id = all : return all events in the database
 
-![Get All Events](Docs\getAllEvents.png)
+![Get All Events](Docs/getAllEvents.png)
 
 - id = count : return count of all events
 
-![Get Count Events](Docs\getCountEvetns.png)
+![Get Count Events](Docs/getCountEvetns.png)
 
 - id = Number : of event return a event with the ID specificated.
 
-![Get Single Event](Docs\getSingleEvent.png)
+![Get Single Event](Docs/getSingleEvent.png)
 
 
 
