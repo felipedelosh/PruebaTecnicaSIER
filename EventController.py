@@ -192,9 +192,10 @@ class EventController:
         params_status = self.validatesEventInputParamsToEditEvent(event_model_params)
 
         if params_status["status"]:
-            return {"status": 200, "message": "All OK" }
+            edit_satus = self.dbConector.editEvent(event_model_params)
+            return {"status": 200, "message": edit_satus["message"] }
         else:
-            return {"status": 401, "message" : params_status["mesagge"]}
+            return {"status": 401, "message" : params_status["message"]}
  
 
         

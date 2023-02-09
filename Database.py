@@ -45,7 +45,7 @@ class Database:
         try:
             self.conection = sqlite3.connect("database.db")
             cursor = self.conection.execute(sql)
-            information = {"status":True, "message":"Count of all Events" ,"data" : str(cursor.fetchone()[0])}
+            information = {"status":True, "message":"Count of all Events" ,"data" : cursor.fetchone()[0]}
             cursor.close()
         except:
             information = {"status":False, "message":"Error to Search Event information", "data": []}
@@ -158,3 +158,75 @@ class Database:
 
         self.conection.close()
         return information
+
+
+    def editEvent(self, args):
+        """
+        Construct a SQL query and execute
+        """
+        #  Return status
+        information = {}
+
+        # create a query
+        sql = "UPDATE event SET "
+        edit_cols_names = []
+        data = []
+
+        exists_name_event = "name_event" in args
+        exists_type_event = "type_event" in args
+        exists_description = "description" in args
+        exists_date_event = "date_event" in args
+        exists_status_event = "status_event" in args
+
+        if exists_name_event:
+            edit_cols_names.append("name_event = ?")
+            data.append(args["name_event"])
+
+
+        if exists_type_event:
+            edit_cols_names.append("type_event = ?")
+            data.append(args["type_event"])
+
+        if exists_description:
+            edit_cols_names.append("description = ?")
+            data.append(args["description"])
+
+        if exists_date_event:
+            edit_cols_names.append("date_event = ?")
+            data.append(args["date_event"])
+
+        if exists_status_event:
+            edit_cols_names.append("status_event = ?")
+            data.append(args["status_event"])
+
+        for i in edit_cols_names:
+            sql = sql + i + ","
+
+        # Erase last comma
+        sql = sql[0:len(sql)-1]
+
+        # Add where
+        sql = sql + " WHERE ID = ?"
+        data.append(int(args["id"]))
+
+        # Create a tuple
+        tuple = ()
+        for i in data:
+            tuple = tuple + (i, )
+        # End to create Query
+
+
+        # Edit ROW
+        try:
+            self.conection = sqlite3.connect("database.db")
+            cursor = self.conection.execute(sql, tuple)
+            self.conection.commit()
+            cursor.close()
+            information = {"status":True, "message":"Edit a Event "+str(args["id"])}
+        except:    
+            information = {"satus":True, "message": "Not Edit event with id " + str(args["id"])}
+
+
+        return information
+
+
