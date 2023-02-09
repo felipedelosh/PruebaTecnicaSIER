@@ -76,9 +76,9 @@ Enter the url localhost:4000/event method GET and send the params to get the inf
 and return a Json file 
 
 {
- data: vector with rich information
- status: code of return
- message: string with 
+ data: vector with rich information,
+ status: code of return,
+ message: string with,
 }
 
 
