@@ -99,3 +99,46 @@ is the input value to filter a information for examples:
 - id = Number : of event return a event with the ID specificated.
 
 ![Get Single Event](Docs/getSingleEvent.png)
+
+
+## Edit Event
+
+Enter the url localhost:4000/event method PATCH and send the JSON to edit a event, the servers response ith  the information in Json file.
+
+Example:
+
+If you create a event 999:
+
+{
+    "id" : 999,
+    "name_event" : "event999",
+    "type_event" : "test",
+    "description" : "This is a test event 999",
+    "date_event" : "08-02-2023",
+    "status_event" : "PendingRevision"
+}
+
+And you need edit some values or indivual values only you need is send a Json in PATCH with the values to edit.
+
+Note: Always you need a id of event
+
+![Edit a event](Docs/editEvent.png)
+
+## Delete a Event
+
+Enter the url localhost:4000/event method DELETE and send the JSON a event, the servers response ith  the information in Json file.
+
+Example:
+
+If you need delete a event 999
+
+Send this JSON:
+
+{
+    "id" : 999
+}
+
+Note: the event no delete of database only hide for the users
+
+![Delete Event](Docs/deleteEvent.png)
+
