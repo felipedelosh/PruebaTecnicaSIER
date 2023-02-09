@@ -53,7 +53,17 @@ class EventController:
                     information = {"status":401, "message": event_count["message"], "data": event_count["data"]}
 
             else:
-                pass
+                # Get indidual resouce?
+                try:
+                    id = int(filters["id"])
+                    get_event_information = self.dbConector.getEventByID(id)
+                    if get_event_information["status"]:
+                        information = {"status":200, "message": get_event_information["message"], "data": get_event_information["data"]}
+                    else:
+                        information = {"status":401, "message": get_event_information["message"], "data": get_event_information["data"]}
+
+                except:
+                    information = {"status":401, "message": "not processed solicitude", "data": []}
 
         return information
         

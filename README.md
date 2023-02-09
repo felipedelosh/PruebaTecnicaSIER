@@ -12,6 +12,9 @@ python3 -m pip install flask
 
 Run the main file (main.py) and consume via POSTMAN.
 
+![Server Funtion](Docs\Funtion.png)
+
+
 # 2 -> About Database
 
 This is in SQLite3 (For easy implemetation) and consume through file (Database.py)
@@ -38,9 +41,21 @@ http://localhost:4000/health
 
 Say if the server is running.
 
+
+http://localhost:4000/event
+
+Route to ADD, EDIT, DELETE and VIEW the events, you need specifed a verb:
+
+- GET: obtain a events.
+- POST: save a event.
+- PACTH: edit a event.
+- DELETE: Hide a event.
+
+
+
 ## Add event:
 
-Enter the url localhost:4000/event and send de Json with the information for example:
+Enter the url localhost:4000/event method POST and send de Json with the information for example:
 
 {
     "id" : 1,
@@ -50,6 +65,40 @@ Enter the url localhost:4000/event and send de Json with the information for exa
     "date_event" : "08-02-2023",
     "status_event" : "PendingRevision"
 }
+
+![Insert Event](Docs\insertEvent.png)
+
+
+## Get events
+
+
+Enter the url localhost:4000/event method GET and send the params to get the information
+and return a Json file 
+
+{
+ data: vector with rich information
+ status: code of return
+ message: string with 
+}
+
+
+## Params:
+
+### id
+
+is the input value to filter a information for examples:
+
+- id = all : return all events in the database
+
+![Get All Events](Docs\getAllEvents.png)
+
+- id = count : return count of all events
+
+![Get Count Events](Docs\getCountEvetns.png)
+
+- id = Number : of event return a event with the ID specificated.
+
+![Get Single Event](Docs\getSingleEvent.png)
 
 
 

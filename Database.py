@@ -77,12 +77,45 @@ class Database:
                 event["status"] = i[5]
                 data.append(event)
 
-            information = {"status":True, "message":"All information of events", "data": data}
+            information = {"status":True, "message":"All information of events > total: "+str(len(data)), "data": data}
             cursor.close()
         except:
             information = {"status":False, "message":"Error to Serach Event information", "data": []}
 
+        self.conection.close()
+        return information
 
+    def getEventByID(self, id):
+        """
+        Return single Event
+        {status:bool, message: str, data: Event}
+        """
+        information = {}
+        data = []
+        sql = """
+        select id,name_event,type_event,description,date_create,status_event from event where visible = 1 and id = ?
+        """
+        try:
+            self.conection = sqlite3.connect("database.db")
+            cursor = self.conection.execute(sql, (id, ))
+
+            row = cursor.fetchone()
+            event = {}
+            event["id"] = row[0]
+            event["name"] = row[1]
+            event["type"] = row[2]
+            event["description"] = row[3]
+            event["date"] = row[4]
+            event["status"] = row[5]
+            data.append(event)
+
+
+            information = {"status":True, "message": "Event Nr "+str(id), "data": data}
+            cursor.close()
+        except:
+            information = {"status":False, "message": "Not get Event Nr "+str(id), "data": data}
+
+        self.conection.close()
         return information
 
 
