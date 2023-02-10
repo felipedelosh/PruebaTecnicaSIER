@@ -96,6 +96,29 @@ def event():
         return delete_event_information
 
 
+@app.route('/gestion', methods=['GET', 'POST', 'DELETE', 'PATCH'])
+def gestion():
+    if request.method == 'GET':
+        return("GET")
+
+    if request.method == 'POST':
+        json = request.get_json()
+        insert_status = controller.insertGestion(json)
+
+        if insert_status["status"] == 200:
+            pass
+        else:
+            pass
+
+        return insert_status
+
+    if request.method == 'DELETE':
+        return("DELETE")
+
+    if request.method == 'PATCH':
+        return("PATCH")
+
+
 #Start
 if __name__ == '__main__':
     app.run(host='0.0.0.0' ,debug=True, port=4000)

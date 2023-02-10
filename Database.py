@@ -13,7 +13,7 @@ class Database:
     
     def createsTables(self):
         sql = """
-        create table if not exists Event
+        create table if not exists event
         (
             id integer primary key AUTOINCREMENT,
             name_event text,
@@ -22,7 +22,8 @@ class Database:
             date_create text,
             date_last_update text,
             status_event text,
-            visible integer
+            visible integer,
+            gestion integer
         )
         """
         try:
@@ -30,7 +31,22 @@ class Database:
             self.conection.execute(sql)
             self.conection.close()
         except:
-            print("Error Generate DB")
+            print("Error Generate event in DB")
+        # This table try to clasificated events if need gestion
+        sql = """
+        create table if not exists type_event_need_gestion
+        (
+            id integer primary key AUTOINCREMENT,
+            type_event text
+        )
+        """
+        try:
+            self.conection = sqlite3.connect("database.db")
+            self.conection.execute(sql)
+            self.conection.close()
+        except:
+            print("Error Generate type_event_need_gestion in DB")
+
 
     def countAllEvents(self):
         """
@@ -260,9 +276,29 @@ class Database:
             cursor.close()
             information = {"status":True, "message":"Edit a Event "+str(args["id"])}
         except:    
-            information = {"satus":True, "message": "Not Edit event with id " + str(args["id"])}
+            information = {"status":False, "message": "Not Edit event with id " + str(args["id"])}
 
 
         return information
 
+    def insertTypeOfGestionEvent(self, gestion_parmas):
+        """
+        Insert a type_event_need_gestion in database
+        """
+        sql = """
+        insert into type_event_need_gestion(type_event) values(?)
+        """
+        insert_status = {}
 
+        try:
+            self.conection = sqlite3.connect("database.db")
+            values = (gestion_parmas["type_event"], )
+            self.conection.execute(sql, values)
+            self.conection.commit()
+            last_type_event_need_gestion = "?"
+            insert_status = {"status": True, "message": "Gestion Event ID: " + last_type_event_need_gestion + " insert successfull"}
+        except:
+            insert_status =  {"status": False, "message": "Error to insert gestion Event"}
+
+        self.conection.close()
+        return insert_status

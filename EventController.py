@@ -21,12 +21,12 @@ class EventController:
             insert_status = self.dbConector.insertEvent(event_model_params)
 
             if insert_status["status"]:
-                return {"status": 200, "mesagge": insert_status["message"]}
+                return {"status": 200, "message": insert_status["message"]}
             else:
-                return {"status": 402, "mesagge": insert_status["message"]}
+                return {"status": 402, "message": insert_status["message"]}
     
         else:
-            return {"status": 401, "mesagge": params_status["mesagge"]}
+            return {"status": 401, "message": params_status["message"]}
 
 
     def getEvents(self, filters):
@@ -107,10 +107,10 @@ class EventController:
                 errors_counter = errors_counter + 1
 
         if errors_counter == 0:
-            return {"status": True, "mesagge": "All OK"}
+            return {"status": True, "message": "All OK"}
         else:
             message = message + " Total errors: "+str(errors_counter)
-            return {"status": False, "mesagge": message}
+            return {"status": False, "message": message}
 
     def validatesEventInputParamsToEditEvent(self, args):
         """
@@ -181,13 +181,13 @@ class EventController:
                 id = int(id_in_json["id"])
                 event_delete_information = self.dbConector.deleteEvent(id)
                 if event_delete_information["status"]:
-                    information = {"status": 200, "mesagge":event_delete_information["message"]}
+                    information = {"status": 200, "message":event_delete_information["message"]}
                 else:
-                    information = {"status": 401, "mesagge":event_delete_information["message"]}
+                    information = {"status": 401, "message":event_delete_information["message"]}
             except:
-                information = {"status": 401, "mesagge": "Invalid to proccessed 'id'"}
+                information = {"status": 401, "message": "Invalid to proccessed 'id'"}
         else:
-            information = {"status": 401, "mesagge": "to delete a event you need a 'id'"}
+            information = {"status": 401, "message": "to delete a event you need a 'id'"}
 
         return information
 
@@ -202,6 +202,41 @@ class EventController:
             return {"status": 200, "message": edit_satus["message"] }
         else:
             return {"status": 401, "message" : params_status["message"]}
+
+
+    def insertGestion(self, json):
+        """
+        if json is ok insert a gestion of event in db
+        """
+        params_status = self._validatesGestionsArgs(json)
+
+        if params_status["status"]:
+            insert_status = self.dbConector.insertTypeOfGestionEvent(json)
+
+            if insert_status["status"]:
+                return {"status": 200, "message": insert_status["message"]}
+            else:
+                return {"status": 401, "message": insert_status["message"]}
+
+        else:
+            return {"status": 401, "message": params_status["message"]}
+
+
+    def _validatesGestionsArgs(self, json):
+        """
+        Return if Json of gestion status is ok
+        """
+
+        hav_name = "type_event" in json
+
+        if hav_name:
+            if str(json["type_event"]).strip() != "" and isinstance(json["type_event"], str):
+                return {"status":True, "message":"Ok"}
+            else:
+                return {"status":False, "message":"Not valid type of type_event"}
+        else:
+            return {"status":False, "message":"Need specificates a type_event"}
+
  
 
     def generateStaticEvents(self):

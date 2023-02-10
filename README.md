@@ -16,6 +16,7 @@ Run the main file (main.py) and consume via POSTMAN.
 
 > Nota: para el manual del usuario en español ingrese a la carpeta Docs y luego "manual API.pdf"
 
+> Note: this is programing in 3.x
 
 # 2 -> About Database
 
@@ -31,6 +32,7 @@ Event(ID,name_event,type_event,description,date_create,date_last_update,status_e
 - date_last_update >> Is a timedate of server when the event is modify.
 - status_event >> only two types PendingRevision | Revisated 
 - visible >> Integer 1 or 0  to indicates if event is delete or not delete
+- gestion >> Integer 1 or 0 to indicates if event need gestion
 
 
 # 3 -> About the routes
@@ -53,6 +55,14 @@ Route to ADD, EDIT, DELETE and VIEW the events, you need specifed a verb:
 - PATCH: edit a event.
 - DELETE: Hide a event.
 
+http://localhost:4000/gestion 
+
+Route to ADD, EDIT, DELETE and VIEW the events gestion types, you need specifed a verb:
+
+- GET: obtain a events gestion types.
+- POST: save a events gestion types.
+- PATCH: edit a events gestion types.
+- DELETE: Hide a events gestion types.
 
 
 ## Add event:
@@ -116,10 +126,9 @@ Example:
 If you create a event 999:
 
 {
-    "id" : 999,
-    "name_event" : "event999",
+    "name_event" : "event",
     "type_event" : "test",
-    "description" : "This is a test event 999",
+    "description" : "This is a test event",
     "date_event" : "08-02-2023",
     "status_event" : "PendingRevision"
 }
