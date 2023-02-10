@@ -167,7 +167,8 @@ class Database:
             values = (event_params["name_event"], event_params["type_event"], event_params["description"], event_params["date_event"], event_params["date_event"], event_params["status_event"], 1)
             self.conection.execute(sql, values)
             self.conection.commit()
-            insert_status = {"status": True, "message": "Event ID:" + "?" + " insert successfull"}
+            last_event_id = str(self.countAllEvents()["data"])
+            insert_status = {"status": True, "message": "Event ID: " + last_event_id + " insert successfull"}
         except:
             insert_status =  {"status": False, "message": "Error to insert Event"}
     
