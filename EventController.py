@@ -2,7 +2,6 @@
 FelipdelosH
 2023
 """
-from EventModel import *
 from Database import *
 
 class EventController:
@@ -199,9 +198,20 @@ class EventController:
 
         if params_status["status"]:
             edit_satus = self.dbConector.editEvent(event_model_params)
-            return {"status": 200, "message": edit_satus["message"] }
+            message = edit_satus["message"]
+            gestion = 0
+
+            modify_satus = "status_event" in event_model_params
+
+            if modify_satus:
+                # Notify the user if need gestion
+                if self.eventRequiresGestion(event_model_params["id"]):
+                    gestion = 1
+                    message = message + ", Note: Requires GESTION. "
+
+            return {"status": 200, "gestion": gestion , "message": message }
         else:
-            return {"status": 401, "message" : params_status["message"]}
+            return {"status": 401, "gestion": 0 , "message" : message }
 
 
     def insertGestion(self, json):
@@ -280,3 +290,29 @@ class EventController:
                 for i in data:
                     self.insertEvent(i)
 
+                datag = []
+                g1 = {"type_event": "clase A"}
+                datag.append(g1)
+                g2 = {"type_event": "clase D"}
+                datag.append(g2)
+
+                for i in datag:
+                    self.insertGestion(i)
+
+    def eventRequiresGestion(self, event_id):
+        """
+        Search in all types of events with gestions
+        if macth return true
+        """
+        all_gesgion_events = self.dbConector.getAllTypeOfGestionEvent()["data"]
+        event = self.dbConector.getEventByID(event_id)
+
+        try:
+            for i in all_gesgion_events:
+                if i['type_event'] == event["data"][0]["type"]:
+                    return True
+
+        except:
+            return False
+
+        return False

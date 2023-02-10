@@ -119,10 +119,10 @@ def gestion():
         return insert_status
 
     if request.method == 'DELETE':
-        return("DELETE")
+        return("DELETE its in construction")
 
     if request.method == 'PATCH':
-        return("PATCH")
+        return("PATCH its in construction")
 
 
 #Start

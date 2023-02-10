@@ -139,6 +139,22 @@ Note: Always you need a id of event
 
 ![Edit a event](Docs/editEvent.png)
 
+## Edit status of event
+
+Enter the url localhost:4000/event method PATCH and send the JSON to edit a event, the servers response ith  the information in Json file.
+
+{
+    "id" : 2,
+    "status_event" : "Revised"
+}
+
+
+The server return if the event need gestion.
+
+![Example event to requires gestion](Docs/event2RequiresGestion.png)
+
+
+
 ## Delete a Event
 
 Enter the url localhost:4000/event method DELETE and send the JSON a event, the servers response ith  the information in Json file.
