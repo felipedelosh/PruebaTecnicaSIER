@@ -139,9 +139,9 @@ Note: Always you need a id of event
 
 ![Edit a event](Docs/editEvent.png)
 
-## Edit status of event
+## Edit status of event 
 
-Enter the url localhost:4000/event method PATCH and send the JSON to edit a event, the servers response ith  the information in Json file.
+if you need change the state of event to revised or pending of revision enter the url localhost:4000/event method PATCH and send the JSON to edit a event, the servers response with  the information in Json file.
 
 {
     "id" : 2,
@@ -173,3 +173,14 @@ Note: the event no delete of database only hide for the users
 
 ![Delete Event](Docs/deleteEvent.png)
 
+## Generates a types of event to need gestion
+
+Enter the url: localhost:4000/gestion method POST and send the Json file
+with the name of type_event to need gestion arter revisión.
+
+
+{
+    "type_event": string
+}
+
+![Example to create a gestion events](Docs/insertGestion.png)
