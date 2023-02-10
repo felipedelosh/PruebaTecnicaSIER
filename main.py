@@ -98,17 +98,23 @@ def event():
 
 @app.route('/gestion', methods=['GET', 'POST', 'DELETE', 'PATCH'])
 def gestion():
+    userIp = request.remote_addr
+
     if request.method == 'GET':
-        return("GET")
+        app.logger.info(f"The user: {userIp} get event_gestion information")
+        params = request.args
+        information = controller.getGestions(params)
+
+        return information
 
     if request.method == 'POST':
         json = request.get_json()
         insert_status = controller.insertGestion(json)
 
         if insert_status["status"] == 200:
-            pass
+            app.logger.info(f"The user: {userIp} insert envent_gestion in database")
         else:
-            pass
+            app.logger.info(f"The user: {userIp} fail to insert envent_gestion in database")
 
         return insert_status
 

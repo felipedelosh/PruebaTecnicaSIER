@@ -237,6 +237,23 @@ class EventController:
         else:
             return {"status":False, "message":"Need specificates a type_event"}
 
+    def getGestions(self, args):
+        """
+        return a gestion event informat
+        """
+        information = {}
+
+        filter_id = "id" in args
+
+        if filter_id:
+            if args["id"] == "all":
+                all_gestion_event = self.dbConector.getAllTypeOfGestionEvent()
+                if all_gestion_event["status"]:
+                    information = {"status":200, "message": all_gestion_event["message"], "data": all_gestion_event["data"]}
+                else:
+                    information = {"status":401, "message": all_gestion_event["message"], "data": all_gestion_event["data"]}
+
+        return information
  
 
     def generateStaticEvents(self):

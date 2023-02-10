@@ -302,3 +302,29 @@ class Database:
 
         self.conection.close()
         return insert_status
+
+    def getAllTypeOfGestionEvent(self):
+        sql = """
+        select * from type_event_need_gestion
+        """
+        information = {}
+        data = []
+
+        try:
+            self.conection = sqlite3.connect("database.db")
+            cursor = self.conection.execute(sql)
+
+            for i in cursor:
+                gestion_event = {}
+                gestion_event["id"] = i[0]
+                gestion_event["type_event"] = i[1]
+                data.append(gestion_event)
+
+            information = {"status":True, "message":"All information of events_gestion > total: "+str(len(data)), "data": data}
+            cursor.close()
+        except:
+            information = {"status":False, "message":"Error to Search Event_Gestion information", "data": data}
+
+
+        self.conection.close()
+        return information
