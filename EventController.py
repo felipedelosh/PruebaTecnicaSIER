@@ -15,6 +15,7 @@ class EventController:
         """
 
         params_status = self.validatesEventInputParamsToNewEvent(event_model_params)
+
         if params_status["status"]:
             # Insert the event and get the status
             insert_status = self.dbConector.insertEvent(event_model_params)
@@ -23,7 +24,7 @@ class EventController:
                 return {"status": 200, "mesagge": insert_status["message"]}
             else:
                 return {"status": 402, "mesagge": insert_status["message"]}
-
+    
         else:
             return {"status": 401, "mesagge": params_status["mesagge"]}
 
@@ -80,12 +81,6 @@ class EventController:
         """
         message = ""
         errors_counter = 0
-
-        id_satus = self._validatesEventID(eventParams)
-        if not id_satus["status"]:
-            errors_counter = errors_counter + 1
-            message = id_satus["message"]
-
 
         if "name_event" not in eventParams:
             message = message + "Not found 'name_event', "
@@ -217,17 +212,17 @@ class EventController:
         if count_rows_db_info["status"]:
             if count_rows_db_info["data"] == 0:
                 data = []
-                e0 = {"id" : 1,"name_event" : "evento 1","type_event" : "clase A","description" : "Defecto","date_event" : "09-02-2023","status_event" : "PendingRevision"}
+                e0 = {"name_event" : "evento 1","type_event" : "clase A","description" : "Defecto","date_event" : "09-02-2023","status_event" : "PendingRevision"}
                 data.append(e0)
-                e1 = {"id" : 2,"name_event" : "evento 2","type_event" : "clase A","description" : "Defecto","date_event" : "09-02-2023","status_event" : "PendingRevision"}
+                e1 = {"name_event" : "evento 2","type_event" : "clase A","description" : "Defecto","date_event" : "09-02-2023","status_event" : "PendingRevision"}
                 data.append(e1)
-                e2 = {"id" : 3,"name_event" : "evento 3","type_event" : "clase B","description" : "Defecto","date_event" : "09-02-2023","status_event" : "PendingRevision"}
+                e2 = {"name_event" : "evento 3","type_event" : "clase B","description" : "Defecto","date_event" : "09-02-2023","status_event" : "PendingRevision"}
                 data.append(e2)
-                e3 = {"id" : 4,"name_event" : "evento 4","type_event" : "clase B","description" : "Defecto","date_event" : "09-02-2023","status_event" : "PendingRevision"}
+                e3 = {"name_event" : "evento 4","type_event" : "clase B","description" : "Defecto","date_event" : "09-02-2023","status_event" : "PendingRevision"}
                 data.append(e3)
-                e4 = {"id" : 5,"name_event" : "evento 5","type_event" : "clase C","description" : "Defecto","date_event" : "09-02-2023","status_event" : "PendingRevision"}
+                e4 = {"name_event" : "evento 5","type_event" : "clase C","description" : "Defecto","date_event" : "09-02-2023","status_event" : "PendingRevision"}
                 data.append(e4)
-                e5 = {"id" : 6,"name_event" : "evento 6","type_event" : "clase D","description" : "Defecto","date_event" : "09-02-2023","status_event" : "PendingRevision"}
+                e5 = {"name_event" : "evento 6","type_event" : "clase D","description" : "Defecto","date_event" : "09-02-2023","status_event" : "PendingRevision"}
                 data.append(e5)
 
                 for i in data:

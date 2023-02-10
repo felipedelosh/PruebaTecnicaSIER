@@ -57,10 +57,10 @@ Route to ADD, EDIT, DELETE and VIEW the events, you need specifed a verb:
 
 ## Add event:
 
-Enter the url localhost:4000/event method POST and send de Json with the information for example:
+Enter the url localhost:4000/event method POST and send de Json with the information of event, after send the solicituted the server return a Json with the information. 
+
 
 {
-    "id" : 1,
     "name_event" : "event001",
     "type_event" : "test",
     "description" : "This is a test event",
