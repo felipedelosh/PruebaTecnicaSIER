@@ -14,7 +14,7 @@ Run the main file (main.py) and consume via POSTMAN.
 
 ![Server Funtion](Docs/Funtion.png)
 
-> Nota: para el manual del usuario en español click aca: [download](Docs\manual API.pdf)
+> Nota: para el manual del usuario en español click ingrese a la carpeta Docs y luego "manual API.pdf"
 
 
 # 2 -> About Database
